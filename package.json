@@ -1,0 +1,27 @@
+{
+    "name": "portwallet",
+    "version": "1.0.0",
+    "description": "PortWallet is payment gateway based on bangladesh this package will easy to integrate the api's",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/zohurul88/PortWallet.git"
+    },
+    "keywords": [
+        "portwallet",
+        "nodejs",
+        "npm",
+        "payment",
+        "api",
+        "http"
+    ],
+    "author": "Zohurul Islam",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/zohurul88/PortWallet/issues"
+    },
+    "homepage": "https://github.com/zohurul88/PortWallet#readme"
+}
