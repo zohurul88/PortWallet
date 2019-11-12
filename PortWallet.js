@@ -1,15 +1,12 @@
-class PortWallet {
-    constructor(appKey, secretKey, version = 1) {
-        this.appKey = appKey;
-        this.secretKey = secretKey;
-        this.version = version;
-    }
+let PortWalletSuper = require("./PortWalletSuper");
 
-    getToken() {
-        let time = Math.floor(Date.now() / 1000)
-        return this.appKey + ':' + this.secretKey + ' v' + this.version + '|' + time;
+class PortWallet extends PortWalletSuper {
+    constructor(appKey, secretKey, version = 1) {
+        super(appKey, secretKey, version);
     }
 
 }
+
+
 
 module.exports = PortWallet;

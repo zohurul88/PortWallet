@@ -3,6 +3,3 @@
 let PortWallet = require("./PortWallet");
 require('dotenv').config();
 const portwallet = new PortWallet(process.env.PORTWALLET_APPKEY, process.env.PORTWALLET_SECRETKEY);
-
-let token = portwallet.getToken();
-console.log(token);
