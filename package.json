@@ -25,10 +25,12 @@
     },
     "homepage": "https://github.com/zohurul88/PortWallet#readme",
     "dependencies": {
-        "crypto": "^1.0.1"
+        "crypto": "^1.0.1",
+        "extend": "^3.0.2"
     },
     "devDependencies": {
         "chai": "^4.2.0",
+        "dotenv": "^8.2.0",
         "mocha": "^6.2.2"
     }
 }
