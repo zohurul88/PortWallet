@@ -15,16 +15,17 @@ class PortWalletSuper {
         this.mode = "live";
         this.operation = null;
         this.requestData = {
-            order: null,
-            product: null,
-            billing: null,
-            shipping: null,
-            discount: null,
-            emi: null,
-            recurring: null,
+            order: {},
+            product: {},
+            billing: {},
+            shipping: {},
+            discount: {},
+            emi: {},
+            recurring: {},
             invoice: null,
             amount: null,
-            refund: null
+            refund: {},
+            customs: []
         };
     }
 
@@ -92,6 +93,7 @@ class PortWalletSuper {
     with({ order = null, product = null, billing = null, shipping = null, discount = null, emi = null, recurring = null, invoice = null, amount = null, refund = null, customs = null }) {
         order === null ? null : this.order(order);
         product === null ? null : this.product(product);
+
         billing === null ? null : this.billing(billing);
         shipping === null ? null : this.shipping(shipping);
         discount === null ? null : this.discount(discount);
@@ -99,6 +101,11 @@ class PortWalletSuper {
         invoice === null ? null : this.invoice(invoice);
         amount === null ? null : this.amount(amount);
         refund === null ? null : this.refund(refund);
+        if (customs !== null) {
+            for (let i in customs) {
+                this.customs(customs[i]);
+            }
+        }
         return this;
     }
 
@@ -108,8 +115,6 @@ class PortWalletSuper {
     }
 
     order({ amount = amount, currency = currency, redirect_url = redirect_url, ipn_url = ipn_url, reference = null, validity = null }) {
-        console.log(amount);
-        this.requestData.order = {};
         this.requestData.order.amount = amount;
         this.requestData.order.currency = currency;
         this.requestData.order.redirect_url = redirect_url;
@@ -124,25 +129,49 @@ class PortWalletSuper {
         return this;
     }
 
-    product(product) {
-        this.requestData.product = product;
+    product({ name = name, description = description }) {
+        this.requestData.product.name = name;
+        this.requestData.product.description = description;
         return this;
     }
-    billing(billing) {
-        this.requestData.billing = billing;
+    billing({ customer = customer }) {
+        this.requestData.billing.customer = this.customer(customer);
         return this;
     }
-    shipping(shipping) {
-        this.requestData.shipping = shipping;
+    shipping({ customer = customer }) {
+        this.requestData.shipping.customer = this.customer(customer);
         return this;
     }
-    discount(discount) {
-        this.requestData.discount = discount;
+    customer({ name = name, email = email, phone = phone, address = null }) {
+        address = address === null ? this.address({}) : this.address(address);
+        return {
+            name,
+            email,
+            phone,
+            address
+        }
+    }
+    address({ street = "unknown", city = "unknown", state = "unknown", zipcode = "unknown", country = "BD" }) {
+        return {
+            street,
+            city,
+            state,
+            zipcode,
+            country
+        }
+    }
+    discount({ enable = 1, codes = [] }) {
+        this.requestData.discount.enable = enable;
+        this.requestData.discount.codes = codes;
         return this;
     }
-    emi(emi) {
-        this.requestData.emi = emi;
+    emi({ enable = 1, tenures = [0] }) {
+        this.requestData.emi.enable = enable;
+        this.requestData.emi.tenures = tenures;
         return this;
+    }
+    customs(custom) {
+        this.requestData.customs.push(custom);
     }
     invoice(invoice) {
         this.requestData.invoice = invoice;
