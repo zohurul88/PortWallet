@@ -12,11 +12,21 @@ describe("PortWalletGenInvoice", () => {
     });
 
     it("should be return 1", () => {
-        expect(portwallet.getOperation()).to.eq(1);
+        expect(portwallet.genInvoice().getOperation()).to.equal(1);
     });
 
     it("Checking the request data", () => {
-        expect(portwallet.with({}).getRequestData()).to.have.own.property("order");
+        expect(portwallet.with({
+            order: {
+                amount: 10,
+                currency: "BDT",
+                redirect_url: "http://yourwebsite.com/success",
+                ipn_url: "http://yourwebsite.com/ipn",
+                reference: "ABC1234",
+                validity: 3600
+            }
+
+        }).getRequestData()).to.deep.include({ order: { amount: 10 } })
     })
 
 

@@ -84,10 +84,11 @@ class PortWalletSuper {
         return this.operation;
     }
 
-    invoice() {
+    genInvoice() {
         this.operation = GEN_INVOICE;
         return this;
     }
+
     with({ order = null, product = null, billing = null, shipping = null, discount = null, emi = null, recurring = null, invoice = null, amount = null, refund = null, customs = null }) {
         order === null ? null : this.order(order);
         product === null ? null : this.product(product);
@@ -105,6 +106,24 @@ class PortWalletSuper {
         this.requestData.order = order;
         return this;
     }
+
+    order({ amount = amount, currency = currency, redirect_url = redirect_url, ipn_url = ipn_url, reference = null, validity = null }) {
+        console.log(amount);
+        this.requestData.order = {};
+        this.requestData.order.amount = amount;
+        this.requestData.order.currency = currency;
+        this.requestData.order.redirect_url = redirect_url;
+        this.requestData.order.ipn_url = ipn_url;
+        if (reference !== null) {
+            this.requestData.order.reference = reference;
+        }
+        if (validity !== null) {
+            this.requestData.order.validity = validity;
+        }
+
+        return this;
+    }
+
     product(product) {
         this.requestData.product = product;
         return this;
