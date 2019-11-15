@@ -16,7 +16,7 @@ describe("PortWalletGenInvoice", () => {
     });
 
     it("Checking the request data", () => {
-        let data = portwallet.with({
+        let data = portwallet.invoice().with({
             order: {
                 amount: 10,
                 currency: "BDT",
@@ -60,7 +60,7 @@ describe("PortWalletGenInvoice", () => {
             discount: { codes: ["DISC101"] },
             emi: { tenures: [3, 6, 9] },
             customs: [{ key1: "val1" }, { key2: "val2" }]
-        }).getRequestData();
+        }).create();
         console.log(data, ":");
         expect(data).to.deep.include({
             order: {
@@ -72,7 +72,7 @@ describe("PortWalletGenInvoice", () => {
                 validity: 3600
             }
 
-        })
+        });
     })
 
 

@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const request = require("request");
 const GEN_INVOICE = 1;
 const IPN_VALIDATE = 2;
 const REFUND_REQUEST = 3;
@@ -85,7 +86,7 @@ class PortWalletSuper {
         return this.operation;
     }
 
-    genInvoice() {
+    invoice() {
         this.operation = GEN_INVOICE;
         return this;
     }
@@ -106,11 +107,6 @@ class PortWalletSuper {
                 this.customs(customs[i]);
             }
         }
-        return this;
-    }
-
-    order(order) {
-        this.requestData.order = order;
         return this;
     }
 
@@ -188,6 +184,35 @@ class PortWalletSuper {
 
     getRequestData() {
         return this.requestData;
+    }
+
+    create() {
+        var options = {
+            method: 'POST',
+            url: 'https://api-sandbox.portwallet.com/api/v1',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            form: {
+                app_key: '.',
+                token: '.',
+                timestamp: '1',
+                call: 'refund_request',
+                invoice: '85D1B31620E7D923',
+                amount: '10'
+            }
+        };
+
+        request(options, function(error, response, body) {
+            if (error) throw new Error(error);
+
+            console.log(body);
+        });
+
+    }
+
+    genInvoice() {
+
     }
 
 }
